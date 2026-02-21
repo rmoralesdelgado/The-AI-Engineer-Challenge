@@ -113,7 +113,7 @@ export function ChatInterface() {
           className="clear-button"
           disabled={messages.length === 0}
           aria-label="Clear chat and start anew"
-          title="Clear chat"
+          title="Clear chat and start a new conversation"
         >
           <ClearIcon />
         </button>
@@ -137,6 +137,7 @@ export function ChatInterface() {
           disabled={!input.trim() || isLoading}
           className="send-button"
           aria-label="Send message"
+          title="Send message"
         >
           <SendIcon />
         </button>
