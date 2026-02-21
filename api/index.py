@@ -15,7 +15,13 @@ app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+def _get_client():
+    """Create OpenAI client on demand so the app loads even without OPENAI_API_KEY."""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
+    return OpenAI(api_key=api_key)
 
 
 class ChatRequest(BaseModel):
@@ -29,10 +35,8 @@ def root():
 
 @app.post("/api/chat")
 def chat(request: ChatRequest):
-    if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
-
     try:
+        client = _get_client()
         user_message = request.message
         response = client.chat.completions.create(
             model="gpt-5",
