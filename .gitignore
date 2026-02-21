@@ -1,5 +1,7 @@
 # Project Specific
 uv.lock
+frontend/node_modules/
+frontend/.next/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
