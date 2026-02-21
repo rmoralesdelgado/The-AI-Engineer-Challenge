@@ -77,7 +77,13 @@ export function ChatInterface() {
       <div className="messages-container">
         {messages.length === 0 && (
           <div className="empty-state">
-            <p>Start the conversation by typing a message below.</p>
+            <p>
+              Welcome to your mental wellness session. This conversation shall
+              be very pleasing and it is yours to enjoy.
+              <br />
+              <br />
+              Just relax your body and start typing by typing your name below.
+            </p>
           </div>
         )}
         {messages.map((msg, i) => (
@@ -93,7 +99,7 @@ export function ChatInterface() {
           </div>
         ))}
         {isLoading && (
-          <div className="message-bubble coach" data-role="coach">
+          <div className="message-bubble coach thinking" data-role="coach">
             <span className="message-label">Coach</span>
             <p className="message-content typing">Thinking...</p>
           </div>

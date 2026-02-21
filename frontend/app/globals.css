@@ -80,16 +80,15 @@ body {
   height: 2.5rem;
   padding: 0;
   background: transparent;
-  border: 1px solid var(--border);
+  border: none;
   color: var(--text-muted);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s;
 }
 
 .theme-toggle-button:hover {
   color: var(--text);
-  border-color: var(--text-muted);
 }
 
 /* Clear chat button — icon only */
@@ -101,16 +100,15 @@ body {
   height: 2.5rem;
   padding: 0;
   background: transparent;
-  border: 1px solid var(--border);
+  border: none;
   color: var(--text-muted);
   cursor: pointer;
   flex-shrink: 0;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s;
 }
 
 .clear-button:hover:not(:disabled) {
   color: var(--text);
-  border-color: var(--text-muted);
 }
 
 .clear-button:disabled {
@@ -162,6 +160,33 @@ body {
 
 .message-bubble.coach {
   border-left-color: var(--text-muted);
+}
+
+/* Thinking state — bar fades in and out */
+.message-bubble.coach.thinking {
+  border-left-color: transparent;
+  position: relative;
+}
+
+.message-bubble.coach.thinking::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--text-muted);
+  animation: bar-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes bar-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .message-label {
