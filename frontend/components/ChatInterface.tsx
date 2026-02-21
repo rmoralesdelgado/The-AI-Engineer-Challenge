@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { SendIcon, ClearIcon } from "./Icons";
 
 type Message = {
   role: "user" | "coach";
@@ -65,6 +66,12 @@ export function ChatInterface() {
     }
   };
 
+  const handleClear = () => {
+    setMessages([]);
+    setError(null);
+    setInput("");
+  };
+
   return (
     <section className="chat-section">
       <div className="messages-container">
@@ -100,6 +107,16 @@ export function ChatInterface() {
       </div>
 
       <form onSubmit={handleSubmit} className="input-form">
+        <button
+          type="button"
+          onClick={handleClear}
+          className="clear-button"
+          disabled={messages.length === 0}
+          aria-label="Clear chat and start anew"
+          title="Clear chat"
+        >
+          <ClearIcon />
+        </button>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -121,7 +138,7 @@ export function ChatInterface() {
           className="send-button"
           aria-label="Send message"
         >
-          Send
+          <SendIcon />
         </button>
       </form>
     </section>
