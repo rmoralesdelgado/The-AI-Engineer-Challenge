@@ -97,7 +97,7 @@ export function ChatInterface() {
               be very pleasing and it is yours to enjoy.
               <br />
               <br />
-              Just relax your body and start typing by typing your name below.
+              Just relax your body and start by telling me your name below.
             </p>
           </div>
         )}
