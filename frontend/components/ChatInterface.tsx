@@ -47,19 +47,34 @@ export function ChatInterface() {
         body: JSON.stringify({ message: trimmed }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data: { reply?: string; detail?: string };
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(res.ok ? "Invalid response from server" : `Server error: ${res.status}`);
+      }
 
       if (!res.ok) {
-        throw new Error(data.detail || "Something went wrong");
+        throw new Error(data.detail || `Server error: ${res.status}`);
+      }
+
+      const reply = data.reply;
+      if (reply == null || typeof reply !== "string") {
+        throw new Error("Invalid response from server");
       }
 
       setMessages((prev) => [
         ...prev,
-        { role: "coach", content: data.reply },
+        { role: "coach", content: reply },
       ]);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to get a response";
+      let message = "Failed to get a response";
+      if (err instanceof TypeError && err.message.includes("fetch")) {
+        message = `Cannot connect to API. Please check that NEXT_PUBLIC_API_URL is set correctly. (Trying: ${apiUrl})`;
+      } else if (err instanceof Error) {
+        message = err.message;
+      }
       setError(message);
     } finally {
       setIsLoading(false);
